@@ -33,7 +33,7 @@ func ResquestFilter(filter * filters.FilterManager) context.Handler {
 
 		ctx.Values().Set("path", ctx.Request().URL.Path)
 
-		_, err := filter.RunRequestFilters(ctx, RequestBodyKey)
+		result , err := filter.RunRequestFilters(ctx, RequestBodyKey)
 
 		writer := ctx.ResponseWriter()
 		ctx.ResetResponseWriter(writer)
@@ -46,6 +46,9 @@ func ResquestFilter(filter * filters.FilterManager) context.Handler {
 			ctx.StopExecution()
 			return
 		}
-		ctx.Next()
+
+		if result.Next{
+			ctx.Next()
+		}
 	}
 }
